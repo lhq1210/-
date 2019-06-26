@@ -1,0 +1,31 @@
+#开发配置
+spring:
+  #数据库配置
+  datasource:
+    druid:
+      #基本属性
+      url: jdbc:mysql://cywl-d0-cloud.csvliipvllg1.rds.cn-northwest-1.amazonaws.com.cn:3306/super_version?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&useSSL=false&serverTimezone=Hongkong&zeroDateTimeBehavior=convertToNull
+      username: hyl
+      password: cywl_528476
+
+  #redis相关配置
+  redis:
+    #database: 0
+    #Redis服务器地址
+    host: 118.89.64.133
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: lesso2128
+
+  #rabbitmq相关配置
+  rabbitmq:
+    host: 111.230.156.108
+    port: 5672
+    username: admin
+    password: 123456
+    publisher-confirms: true
+    virtual-host: /
+
+server:
+  port: 8080

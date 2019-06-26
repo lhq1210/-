@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ln.mapper.CrmUserMapper">
+
+     <resultMap id="CrmUserMap" type="com.ln.pojo.CrmUser">
+        <id property="id" column="id"/>
+        <result property="openId" column="openId"/>
+        <result property="unionId" column="unionId"/>
+        <result property="countryCode" column="countryCode"/>
+        <result property="phoneNumber" column="phoneNumber"/>
+        <result property="avatarUrl" column="avatarUrl"/>
+        <result property="nickName" column="nickName"/>
+        <result property="nickNameSpell" column="nickNameSpell"/>
+        <result property="gender" column="gender"/>
+        <result property="country" column="country"/>
+        <result property="provice" column="provice"/>
+        <result property="city" column="city"/>
+        <result property="userName" column="userName"/>
+        <result property="jobsName" column="jobsName"/>
+        <result property="companyName" column="companyName"/>
+        <result property="email" column="email"/>
+        <result property="address" column="address"/>
+        <result property="department" column="department"/>
+        <result property="weChat" column="weChat"/>
+        <result property="personalProfile" column="personalProfile"/>
+        <result property="delflag" column="delflag"/>
+        <result property="createrId" column="createrId"/>
+        <result property="creater" column="creater"/>
+        <result property="createrTime" column="createrTime"/>
+        <result property="modifyId" column="modifyId"/>
+        <result property="modify" column="modify"/>
+        <result property="modifyTime" column="modifyTime"/>
+    </resultMap>
+
+     <sql id="Base_Column_List">
+        id,openId,unionId,countryCode,phoneNumber,avatarUrl,nickName,nickNameSpell,gender,country,provice,city,userName,jobsName,companyName,email,address,department,weChat,personalProfile,delflag,createrId,creater,createrTime,modifyId,modify,modifyTime
+     </sql>
+
+    <select id="getById" resultMap="CrmUserMap" parameterType="com.ln.pojo.CrmUser">
+        select 
+        <include refid="Base_Column_List"/>
+        from crm_customer a 
+        where id = #{id} and delflag = #{delflag}
+    </select>
+
+    <select id="findListByMap" resultMap="CrmUserMap" parameterType="java.util.Map">
+        select 
+        <include refid="Base_Column_List"/>
+        from crm_customer a 
+        <where>
+            <if test="delflag != null">
+                and a.delflag = #{delflag}
+            </if>
+            <if test="tenantId != null">
+                and a.tenantId = #{tenantId}
+            </if>
+            <if test="keyword != null">
+                and a.name like concat('%', #{keyword}, '%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into crm_customer
+            (openId,unionId,countryCode,phoneNumber,avatarUrl,nickName,nickNameSpell,gender,country,provice,city,userName,jobsName,companyName,email,address,department,weChat,personalProfile,delflag,createrId,creater,createrTime,modifyId,modify,modifyTime
+            )
+        values
+            (#{openId},#{unionId},#{countryCode},#{phoneNumber},#{avatarUrl},#{nickName},#{nickNameSpell},#{gender},#{country},#{provice},#{city},#{userName},#{jobsName},#{companyName},#{email},#{address},#{department},#{weChat},#{personalProfile},#{delflag},#{createrId},#{creater},#{createrTime},#{modifyId},#{modify},#{modifyTime}
+            )
+    </insert>
+
+    <update id="update" parameterType="com.ln.pojo.CrmUser">
+        update crm_customer
+        <set>
+          <if test="openId != null">
+            openId = #{openId},
+          </if>
+          <if test="unionId != null">
+            unionId = #{unionId},
+          </if>
+          <if test="countryCode != null">
+            countryCode = #{countryCode},
+          </if>
+          <if test="phoneNumber != null">
+            phoneNumber = #{phoneNumber},
+          </if>
+          <if test="avatarUrl != null">
+            avatarUrl = #{avatarUrl},
+          </if>
+          <if test="nickName != null">
+            nickName = #{nickName},
+          </if>
+          <if test="nickNameSpell != null">
+            nickNameSpell = #{nickNameSpell},
+          </if>
+          <if test="gender != null">
+            gender = #{gender},
+          </if>
+          <if test="country != null">
+            country = #{country},
+          </if>
+          <if test="provice != null">
+            provice = #{provice},
+          </if>
+          <if test="city != null">
+            city = #{city},
+          </if>
+          <if test="userName != null">
+            userName = #{userName},
+          </if>
+          <if test="jobsName != null">
+            jobsName = #{jobsName},
+          </if>
+          <if test="companyName != null">
+            companyName = #{companyName},
+          </if>
+          <if test="email != null">
+            email = #{email},
+          </if>
+          <if test="address != null">
+            address = #{address},
+          </if>
+          <if test="department != null">
+            department = #{department},
+          </if>
+          <if test="weChat != null">
+            weChat = #{weChat},
+          </if>
+          <if test="personalProfile != null">
+            personalProfile = #{personalProfile},
+          </if>
+          <if test="delflag != null">
+            delflag = #{delflag},
+          </if>
+          <if test="createrId != null">
+            createrId = #{createrId},
+          </if>
+          <if test="creater != null">
+            creater = #{creater},
+          </if>
+          <if test="createrTime != null">
+            createrTime = #{createrTime},
+          </if>
+          <if test="modifyId != null">
+            modifyId = #{modifyId},
+          </if>
+          <if test="modify != null">
+            modify = #{modify},
+          </if>
+          <if test="modifyTime != null">
+            modifyTime = #{modifyTime}
+          </if>
+        </set>
+         WHERE id = #{id}
+    </update>
+
+    <update id="delete" parameterType="java.util.Map">
+        update crm_customer
+        <set>
+        <if test="delflag != null">
+            delflag = #{delflag},
+        </if>
+        <if test="modifyId != null">
+            modifyId = #{modifyId},
+        </if>
+        <if test="modifyTime != null">
+            modifyTime = #{modifyTime}
+        </if>
+        </set>
+         WHERE id in (${ids})
+    </update>
+
+</mapper>

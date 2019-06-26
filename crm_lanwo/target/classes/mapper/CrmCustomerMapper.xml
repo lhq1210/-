@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ln.mapper.CrmCustomerMapper">
+
+     <resultMap id="CrmCustomerMap" type="com.ln.pojo.CrmCustomer">
+        <id property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="companyId" column="companyId"/>
+        <result property="companyName" column="companyName"/>
+        <result property="address" column="address"/>
+        <result property="followState" column="followState"/>
+        <result property="followTime" column="followTime"/>
+        <result property="businessSource" column="businessSource"/>
+        <result property="saleStage" column="saleStage"/>
+        <result property="cooperation" column="cooperation"/>
+        <result property="businissCardPath" column="businissCardPath"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
+        <result property="status" column="status"/>
+        <result property="delflag" column="delflag"/>
+        <result property="createrId" column="createrId"/>
+        <result property="creater" column="creater"/>
+        <result property="createrTime" column="createrTime"/>
+        <result property="modifyId" column="modifyId"/>
+        <result property="modify" column="modify"/>
+        <result property="modifyTime" column="modifyTime"/>
+    </resultMap>
+
+     <sql id="Base_Column_List">
+        id,uid,companyId,companyName,address,followState,followTime,businessSource,saleStage,cooperation,businissCardPath,longitude,latitude,status,delflag,createrId,creater,createrTime,modifyId,modify,modifyTime
+     </sql>
+
+    <select id="getById" resultMap="CrmCustomerMap" parameterType="com.ln.pojo.CrmCustomer">
+        select 
+        <include refid="Base_Column_List"/>
+        from crm_customer a 
+        where id = #{id} and delflag = #{delflag}
+    </select>
+
+    <select id="findListByMap" resultMap="CrmCustomerMap" parameterType="java.util.Map">
+        select 
+        <include refid="Base_Column_List"/>
+        from crm_customer a 
+        <where>
+            <if test="delflag != null">
+                and a.delflag = #{delflag}
+            </if>
+            <if test="tenantId != null">
+                and a.tenantId = #{tenantId}
+            </if>
+            <if test="keyword != null">
+                and a.name like concat('%', #{keyword}, '%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into crm_customer
+            (uid,companyId,companyName,address,followState,followTime,businessSource,saleStage,cooperation,businissCardPath,longitude,latitude,status,delflag,createrId,creater,createrTime,modifyId,modify,modifyTime
+            )
+        values
+            (#{uid},#{companyId},#{companyName},#{address},#{followState},#{followTime},#{businessSource},#{saleStage},#{cooperation},#{businissCardPath},#{longitude},#{latitude},#{status},#{delflag},#{createrId},#{creater},#{createrTime},#{modifyId},#{modify},#{modifyTime}
+            )
+    </insert>
+
+    <update id="update" parameterType="com.ln.pojo.CrmCustomer">
+        update crm_customer
+        <set>
+          <if test="uid != null">
+            uid = #{uid},
+          </if>
+          <if test="companyId != null">
+            companyId = #{companyId},
+          </if>
+          <if test="companyName != null">
+            companyName = #{companyName},
+          </if>
+          <if test="address != null">
+            address = #{address},
+          </if>
+          <if test="followState != null">
+            followState = #{followState},
+          </if>
+          <if test="followTime != null">
+            followTime = #{followTime},
+          </if>
+          <if test="businessSource != null">
+            businessSource = #{businessSource},
+          </if>
+          <if test="saleStage != null">
+            saleStage = #{saleStage},
+          </if>
+          <if test="cooperation != null">
+            cooperation = #{cooperation},
+          </if>
+          <if test="businissCardPath != null">
+            businissCardPath = #{businissCardPath},
+          </if>
+          <if test="longitude != null">
+            longitude = #{longitude},
+          </if>
+          <if test="latitude != null">
+            latitude = #{latitude},
+          </if>
+          <if test="status != null">
+            status = #{status},
+          </if>
+          <if test="delflag != null">
+            delflag = #{delflag},
+          </if>
+          <if test="createrId != null">
+            createrId = #{createrId},
+          </if>
+          <if test="creater != null">
+            creater = #{creater},
+          </if>
+          <if test="createrTime != null">
+            createrTime = #{createrTime},
+          </if>
+          <if test="modifyId != null">
+            modifyId = #{modifyId},
+          </if>
+          <if test="modify != null">
+            modify = #{modify},
+          </if>
+          <if test="modifyTime != null">
+            modifyTime = #{modifyTime}
+          </if>
+        </set>
+         WHERE id = #{id}
+    </update>
+
+    <update id="delete" parameterType="java.util.Map">
+        update crm_customer
+        <set>
+        <if test="delflag != null">
+            delflag = #{delflag},
+        </if>
+        <if test="modifyId != null">
+            modifyId = #{modifyId},
+        </if>
+        <if test="modifyTime != null">
+            modifyTime = #{modifyTime}
+        </if>
+        </set>
+         WHERE id in (${ids})
+    </update>
+
+</mapper>
